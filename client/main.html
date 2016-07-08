@@ -1,0 +1,133 @@
+<head>
+  <title>Social Web</title>
+</head>
+
+<body>
+  <!-- {{> navegationbar}} {{> welcome}} {{> website_form}} {{> website_list}} -->
+
+</body>
+<template name="ApplicationLayout">
+  {{>yield "navegationbar"}} {{>yield "main"}}
+</template>
+
+<template name="start">
+  {{> welcome}} {{> website_form}} {{> website_list}}
+</template>
+
+<template name="welcome">
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Welcome to social web!</h1>
+    </div>
+  </div>
+</template>
+
+<template name="navegationbar">
+  <div class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+
+        <div class="navbar-header navbar-right">
+          <a class="navbar-brand" href="/">
+	          Social Web!
+	        </a>
+        </div>
+
+        <ul class="nav navbar-nav">
+          <li>{{> loginButtons}}</li>
+        </ul>
+
+      </div>
+    </nav>
+  </div>
+</template>
+
+<template name="website_form">
+  <div class="container">
+    <a class="btn btn-default js-toggle-website-form" href="#">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </a>
+    <div id="website_form" class="hidden_div">
+      <form class="js-save-website-form">
+        <div class="form-group">
+          <label for="url">Site address</label>
+          <input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
+        </div>
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" id="title" placeholder="Mysite">
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" class="form-control" id="description" placeholder="I found this site really useful for ...">
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div>
+  </div>
+</template>
+
+<!-- template that displays several website items -->
+<template name="website_list">
+  <div class="container">
+    <ol>
+      {{#each websites}} {{>website_item}} {{/each}}
+    </ol>
+  </div>
+</template>
+
+<!-- template that displays individual website entries -->
+<template name="website_item">
+  <li>
+    <a href="/website/{{_id}}">{{title}}</a>
+    <p>
+      Description: {{description}}
+      <br> Votes: {{vote}}
+    </p>
+    <a href="#" class="btn btn-default js-upvote">
+      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+    </a>
+    <a href="#" class="btn btn-default js-downvote">
+      <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+    </a>
+    <!-- you will be putting your up and down vote buttons in here! -->
+  </li>
+</template>
+
+<template name="website">
+  <div class="container">
+    <h3>{{title}}</h3>
+    <h4>Description: {{description}}</h4>
+    <h4>Votes: {{vote}}</h4>
+  </div>
+  {{> add_comments id=_id}} {{> comments_list id=_id}}
+</template>
+
+<template name="add_comments">
+  <div class="container">
+    <div id="add_comments_form">
+      <form class="js-save-comment-form">
+        <div class="form-group">
+          <label for="comment">Your comment:</label>
+          <input type="text" class="form-control" id="comment" placeholder="Your comment here.">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div>
+  </div>
+</template>
+
+<template name="comments_list">
+  <div class="container">
+    <br>
+    <h3>Comments:</h3>
+    <br>
+    {{#each comments}}
+    <strong>Create by:</strong> {{createBy}}
+    <br>
+    <strong>Comment:</strong> {{comment}}
+    <br> 
+    {{/each}}
+  </div>
+</template>
